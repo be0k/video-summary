@@ -1,0 +1,48 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+outputs/
+wandb/
+.env
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+data/*
+!data/mosu/
+!data/mrhisum/
+data/mosu/*
+data/mrhisum/*
+!data/mosu/.gitkeep
+!data/mrhisum/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+
+# Inference-only release surface.
+# The web app uses scripts/summarize_mp4.py plus models/ and
+# utils/generate_summary.py. Training/evaluation code is excluded from
+# future commits for the public inference package.
+dataset.py
+main.py
+solver.py
+hyper_tuning.py
+tuning.py
+scripts/train_*.sh
+scripts/eval_*.sh
+scripts/analyze_*.py
+utils/compute_metrics.py
+utils/config.py
+utils/logger.py
+utils/seed.py
+utils/wandb.py
+configs/longvideo.yaml
+configs/mrhisum.yaml
+configs/summe.yaml
+configs/tvsum.yaml

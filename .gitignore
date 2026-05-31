@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and editor state
+.env
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+.DS_Store
+
+# Generated web-app jobs and local inputs
+merging/data/
+inputs/
+outputs/
+demo_render/
+wandb/
+
+# Trimamba inference-only publication surface. Keep scripts/summarize_mp4.py,
+# configs/mosu.yaml, models/, and utils/generate_summary.py.
+Trimamba/dataset.py
+Trimamba/main.py
+Trimamba/solver.py
+Trimamba/hyper_tuning.py
+Trimamba/tuning.py
+Trimamba/scripts/train_*.sh
+Trimamba/scripts/eval_*.sh
+Trimamba/scripts/analyze_*.py
+Trimamba/utils/compute_metrics.py
+Trimamba/utils/config.py
+Trimamba/utils/logger.py
+Trimamba/utils/seed.py
+Trimamba/utils/wandb.py
+Trimamba/configs/longvideo.yaml
+Trimamba/configs/mrhisum.yaml
+Trimamba/configs/summe.yaml
+Trimamba/configs/tvsum.yaml
+
+# Model weights, checkpoints, features, and point clouds
+*.ckpt
+*.pth
+*.pt
+*.pkl
+*.onnx
+*.h5
+*.npz
+*.pcd
+*.ply
+
+# Local videos and images produced during experiments
+*.MOV
+*.mov
+*.mp4
+*.m4v
+*.avi
+*.mkv
+*.webm
+*.jpg
+*.jpeg
+*.png
+
+# Keep lightweight placeholders/docs if they exist.
+!**/.gitkeep
+!**/README.md
+!docs/**/*.png
+!docs/**/*.jpg
+
+# Vendored Lighthouse demo weights are not needed by this project.
+video_retrieval/lighthouse/gradio_demo/weights/*
+!video_retrieval/lighthouse/gradio_demo/weights/.gitkeep
+video_retrieval/lighthouse/*.pkl
+video_retrieval/lighthouse/*.pth

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drone Mapping Console</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-mark">DM</div>
+          <div>
+            <h1>Drone Mapping</h1>
+            <p>LingBot-MAP · TriMamba</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Pages">
+          <button class="nav-button active" type="button" data-page="upload">Upload</button>
+          <button class="nav-button" type="button" data-page="lingbot">LingBot</button>
+          <button class="nav-button" type="button" data-page="postprocess">Postprocess</button>
+          <button class="nav-button" type="button" data-page="summary">Summary</button>
+          <button class="nav-button" type="button" data-page="retrieval">Retrieval</button>
+        </nav>
+
+        <section class="job-list-panel">
+          <div class="sidebar-head">
+            <h2>Data</h2>
+            <button id="reloadJobsBtn" type="button">↻</button>
+          </div>
+          <div id="runningJobLine" class="running-line">running: none</div>
+          <div id="jobList" class="job-list"></div>
+        </section>
+
+        <div class="env-list">
+          <div>
+            <span>LingBot</span>
+            <strong>lingbot-map</strong>
+          </div>
+          <div>
+            <span>TriMamba</span>
+            <strong>triple</strong>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="pageEyebrow">Upload</p>
+            <h2 id="pageTitle">Video Intake</h2>
+          </div>
+          <div class="job-strip">
+            <span id="jobLine">no job</span>
+            <span class="status-pill" id="statePill">idle</span>
+          </div>
+        </header>
+
+        <div class="content-grid">
+          <section class="pages">
+            <section class="page active" id="page-upload" data-title="Video Intake" data-eyebrow="Upload">
+              <div class="hero-panel">
+                <div class="video-wrap">
+                  <video id="sourceVideo" class="primary-video" controls preload="metadata" playsinline></video>
+                  <div class="empty-video" id="sourceEmpty">No video</div>
+                </div>
+
+                <div class="upload-toolbar">
+                  <label class="file-button">
+                    <input id="videoFile" type="file" accept="video/*,.mp4,.mov,.m4v,.qt" />
+                    파일 선택
+                  </label>
+                  <button id="uploadBtn" type="button">업로드</button>
+                  <button id="runBtn" type="button" disabled>실행</button>
+                </div>
+              </div>
+
+              <div class="panel control-panel">
+                <div class="panel-head">
+                  <h3>Clip</h3>
+                  <span id="durationLabel">-</span>
+                </div>
+                <div class="timeline-row">
+                  <input id="startRange" type="range" min="0" max="0" value="0" step="0.1" disabled />
+                  <output id="startLabel">0.0s</output>
+                </div>
+                <div class="timeline-row">
+                  <input id="endRange" type="range" min="0" max="0" value="0" step="0.1" disabled />
+                  <output id="endLabel">0.0s</output>
+                </div>
+                <div class="control-grid">
+                  <label>
+                    시작
+                    <input id="startSeconds" type="number" min="0" step="0.1" value="0" disabled />
+                  </label>
+                  <label>
+                    끝
+                    <input id="endSeconds" type="number" min="0" step="0.1" value="0" disabled />
+                  </label>
+                  <label>
+                    LingBot FPS
+                    <input id="lingbotFps" type="number" min="1" max="30" step="1" value="5" />
+                  </label>
+                  <label>
+                    Summary Ratio
+                    <input id="summaryRatio" type="number" min="0.05" max="0.8" step="0.05" value="0.15" />
+                  </label>
+                  <button id="useCurrent" type="button" disabled>현재 위치</button>
+                  <button id="useEndCurrent" type="button" disabled>끝 위치</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="page" id="page-lingbot" data-title="Raw Reconstruction" data-eyebrow="LingBot-MAP">
+              <div class="viewer-layout">
+                <section class="viewer-panel">
+                  <div class="viewer-toolbar">
+                    <div>
+                      <h3>Demo Viewer</h3>
+                      <span id="rawViewerState">waiting</span>
+                    </div>
+                    <div class="toolbar-actions">
+                      <button id="openRawBtn" type="button" disabled>뷰어 실행</button>
+                      <a id="rawExternalLink" class="link-button disabled" target="_blank" rel="noreferrer">새 창</a>
+                    </div>
+                  </div>
+                  <iframe id="rawViewerFrame" title="LingBot raw viewer"></iframe>
+                </section>
+              </div>
+            </section>
+
+            <section class="page" id="page-postprocess" data-title="Postprocessed Map" data-eyebrow="Translation Closure">
+              <div class="viewer-layout">
+                <section class="viewer-panel">
+                  <div class="viewer-toolbar">
+                    <div>
+                      <h3>visualize_predictions.py</h3>
+                      <span id="postViewerState">waiting</span>
+                    </div>
+                    <div class="toolbar-actions">
+                      <button id="openPostBtn" type="button" disabled>뷰어 실행</button>
+                      <a id="postExternalLink" class="link-button disabled" target="_blank" rel="noreferrer">새 창</a>
+                    </div>
+                  </div>
+                  <iframe id="postViewerFrame" title="Postprocessed point cloud viewer"></iframe>
+                </section>
+              </div>
+            </section>
+
+            <section class="page" id="page-summary" data-title="Video Summary" data-eyebrow="TriMamba">
+              <div class="summary-grid">
+                <section class="panel video-card">
+                  <div class="panel-head">
+                    <h3>Trimmed</h3>
+                    <span id="trimmedState">-</span>
+                  </div>
+                  <video id="trimmedVideo" controls preload="metadata" playsinline></video>
+                </section>
+
+                <section class="panel video-card emphasis">
+                  <div class="panel-head">
+                    <h3>Summary</h3>
+                    <span id="summaryState">-</span>
+                  </div>
+                  <video id="summaryVideo" controls preload="metadata" playsinline></video>
+                </section>
+              </div>
+
+              <section class="panel analysis-panel">
+                <div class="panel-head">
+                  <h3>Score Analysis</h3>
+                  <button id="loadAnalysisBtn" type="button" disabled>분석 불러오기</button>
+                </div>
+                <div id="segmentList" class="segment-list"></div>
+                <canvas id="scoreCanvas" height="180"></canvas>
+                <div id="shotList" class="shot-list"></div>
+              </section>
+            </section>
+
+            <section class="page" id="page-retrieval" data-title="Video Retrieval" data-eyebrow="Lighthouse QD-DETR">
+              <section class="panel retrieval-panel">
+                <div class="panel-head">
+                  <h3>clip_slowfast + qd_detr</h3>
+                  <span id="retrievalState">-</span>
+                </div>
+                <video id="retrievalVideo" class="retrieval-video" controls preload="metadata" playsinline></video>
+                <div class="retrieval-controls">
+                  <input id="retrievalQuery" type="text" placeholder="ex. person walking near the building" />
+                  <button id="indexRetrievalBtn" type="button" disabled>인덱싱</button>
+                  <button id="queryRetrievalBtn" type="button" disabled>검색</button>
+                </div>
+                <div class="retrieval-sections">
+                  <section class="retrieval-block">
+                    <div class="mini-head">
+                      <h4>Retrieved Moments</h4>
+                    </div>
+                    <div id="retrievedMoments" class="moment-list"></div>
+                  </section>
+                  <section class="retrieval-block saliency-block">
+                    <div class="mini-head">
+                      <h4>Saliency Score</h4>
+                    </div>
+                    <canvas id="retrievalSaliencyCanvas" width="900" height="220"></canvas>
+                  </section>
+                  <section class="retrieval-block">
+                    <div class="mini-head">
+                      <h4>Highlighted Frames</h4>
+                    </div>
+                    <div id="highlightFrames" class="retrieval-results"></div>
+                  </section>
+                </div>
+              </section>
+            </section>
+          </section>
+
+          <aside class="console-panel">
+            <div class="panel-head">
+              <h3>Job</h3>
+              <button id="refreshBtn" type="button" disabled>새로고침</button>
+            </div>
+            <div class="metric-grid">
+              <div><span>Stage</span><strong id="stageMetric">-</strong></div>
+              <div><span>Frames</span><strong id="fpsMetric">-</strong></div>
+              <div><span>Start</span><strong id="startMetric">-</strong></div>
+            </div>
+            <pre id="logBox"></pre>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
