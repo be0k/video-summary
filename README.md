@@ -71,18 +71,6 @@ curl -X POST "http://127.0.0.1:7860/api/jobs/$JOB_ID/run" \
   -d '{"start_seconds": 0, "end_seconds": 120, "lingbot_fps": 5, "summary_ratio": 0.15}'
 ```
 
-## Documentation
-
-Wiki-ready docs are in [docs/wiki](docs/wiki):
-
-- [Home](docs/wiki/Home.md)
-- [Installation](docs/wiki/Installation.md)
-- [Environment Setup](docs/wiki/Environment-Setup.md)
-- [Configuration](docs/wiki/Configuration.md)
-- [API Reference](docs/wiki/API-Reference.md)
-- [Examples](docs/wiki/Examples.md)
-- [Artifacts and Weights](docs/wiki/Artifacts-and-Weights.md)
-- [Development Notes](docs/wiki/Development-Notes.md)
 
 ## Notes
 
