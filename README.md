@@ -18,7 +18,6 @@ The project is intended for local research/demo use. Model weights, uploaded vid
 ├── Trimamba/             # TriMamba inference wrapper and model code
 ├── video_retrieval/      # Lighthouse retrieval wrapper
 ├── merging/              # Local web UI and API server
-├── docs/wiki/            # GitHub Wiki-ready documentation
 ├── .env.example          # Optional local path overrides
 └── .gitignore
 ```
