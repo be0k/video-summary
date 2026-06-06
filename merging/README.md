@@ -50,6 +50,8 @@ TriMamba          triple
 Video Retrieval   retrieval
 ```
 
+For complete setup commands, see `docs/wiki/Environment-Setup.md` from the repository root.
+
 You can also override individual interpreters:
 
 ```bash

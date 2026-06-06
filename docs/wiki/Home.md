@@ -34,6 +34,7 @@ The application is designed for local research and demonstration. Uploaded video
 ## Next Pages
 
 - [Installation](Installation.md)
+- [Environment Setup](Environment-Setup.md)
 - [Configuration](Configuration.md)
 - [API Reference](API-Reference.md)
 - [Examples](Examples.md)

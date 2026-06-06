@@ -202,7 +202,7 @@ def corrected_predictions_for_variant(
         return base, report
 
     if not candidates:
-        report["error"] = "no visual loop candidates"
+        report["fallback_reason"] = "no visual loop candidates; exported without pose correction"
         return base, report
 
     current = dict(base)
@@ -739,13 +739,17 @@ def main() -> None:
         nms_radius=args.closure_nms_radius,
     )
     if not candidates:
-        raise SystemExit("No visual loop candidates found. Lower --closure_min_inliers.")
-    print("Candidates:")
-    for cand in candidates:
         print(
-            f"  {cand.start:04d}->{cand.end:04d} "
-            f"inliers={cand.inliers} matches={cand.matches} separation={cand.separation}"
+            "No visual loop candidates found. "
+            "Continuing with no-closure fallback exports."
         )
+    else:
+        print("Candidates:")
+        for cand in candidates:
+            print(
+                f"  {cand.start:04d}->{cand.end:04d} "
+                f"inliers={cand.inliers} matches={cand.matches} separation={cand.separation}"
+            )
 
     rows: list[dict[str, Any]] = []
     for idx, variant in enumerate(variants):

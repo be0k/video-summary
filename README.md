@@ -77,6 +77,7 @@ Wiki-ready docs are in [docs/wiki](docs/wiki):
 
 - [Home](docs/wiki/Home.md)
 - [Installation](docs/wiki/Installation.md)
+- [Environment Setup](docs/wiki/Environment-Setup.md)
 - [Configuration](docs/wiki/Configuration.md)
 - [API Reference](docs/wiki/API-Reference.md)
 - [Examples](docs/wiki/Examples.md)

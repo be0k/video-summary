@@ -22,11 +22,13 @@ Use the environment names expected by the web app:
 
 ```bash
 conda create -n lingbot-map python=3.10
-conda create -n triple python=3.12
+conda create -n triple python=3.10
 conda create -n retrieval python=3.10
 ```
 
 Install each component's dependencies inside its matching environment. The exact dependency set depends on your CUDA/PyTorch version.
+
+See [Environment Setup](Environment-Setup.md) for the full environment-by-environment commands, validation checks, and common error fixes.
 
 ## 3. Place Required Weights
 
